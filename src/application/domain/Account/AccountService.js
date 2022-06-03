@@ -12,7 +12,8 @@ class AccountService {
             throw new Error("Invalid email!")
         }
 
-        let newAccount = new Account(email, password);   
+        let encryptedPassword = this.stringEncryptor.encrypt(password)
+        let newAccount = new Account(email, encryptedPassword);   
         this.accountRepositoryAdapter.saveAccount(newAccount);
     }
 
