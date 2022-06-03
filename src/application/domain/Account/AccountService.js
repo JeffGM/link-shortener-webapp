@@ -11,8 +11,15 @@ export default class AccountService {
         this.#validateNewAccountFields(username, email, password);
 
         let encryptedPassword = this.stringCryptUtils.encrypt(password)
-        let newAccount = new Account(username, email, encryptedPassword);   
-        this.accountRepositoryAdapter.saveAccount(newAccount);
+        let newAccount = new Account(username, email, encryptedPassword);
+        
+        try {
+            this.accountRepositoryAdapter.saveAccount(newAccount);
+        } catch(err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+                throw new Error("Email or username already registered");
+            }
+        }
     }
 
     login(username, password) {
@@ -52,7 +59,7 @@ export default class AccountService {
         if (!password) {
             throw new Error("Account must have an password!");
         }
-        if (password.lenght < 8) {
+        if (password.length < 8) {
             throw new Error("Account password must have at least 8 characters!");
         }
     }

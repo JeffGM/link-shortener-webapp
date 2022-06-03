@@ -1,6 +1,6 @@
 export default class MysqlDatabasePort {
     constructor(driver, host, user, password, database, port) {
-        this.connection =  driver.createConnection({
+        this.connection = new driver({
             host     : host,
             user     : user,
             password : password,
@@ -9,7 +9,7 @@ export default class MysqlDatabasePort {
           });
     }
 
-    async insertOne(entityName, withParams) {
+    insertOne(entityName, withParams) {
         let sqlStatement = 'INSERT INTO ' + entityName + '(';
         let paramsNames = Object.keys(withParams);
         let paramsValues = Object.values(withParams);
@@ -20,11 +20,11 @@ export default class MysqlDatabasePort {
         return this.#executeStatement(sqlStatement);
     }
 
-    async selectOne(entityName, byParams) {
+    selectOne(entityName, byParams) {
         return this.select(entityName, byParams, 1);
     }
 
-    async select(entityName, byParams, limit) {
+    select(entityName, byParams, limit) {
         let sqlStatement = 'SELECT * FROM "' + entityName;
 
         if (byParams) {
@@ -47,12 +47,8 @@ export default class MysqlDatabasePort {
         return this.#executeStatement(sqlStatement);
     }
 
-    async #executeStatement(sqlStatement) {
-        let result = this.connection.query(sqlStatement, function(err, rows, fields) {
-            if (err) throw err;
-            return rows;
-        });
-
-        return await result;
+    #executeStatement(sqlStatement) {
+        let result = this.connection.query(sqlStatement);
+        return result;
     }
 }

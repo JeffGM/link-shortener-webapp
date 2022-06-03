@@ -4,7 +4,7 @@ import AccountService from "./src/application/domain/Account/AccountService.js";
 import AccountRepositoryAdapter from "./src/infrastructure/AccountRepositoryAdapter.js";
 import MysqlDatabasePort from "./src/application/port/MysqlDatabasePort.js";
 import bcrypt from 'bcrypt';
-import mysql from 'mysql';
+import mysql from 'sync-mysql';
 
 let mysqlDatabasePort = new MysqlDatabasePort(mysql, "localhost", "root", "admin", "pds", 3306);
 let jwtUtils = new JwtUtils("my-secret-pass");
