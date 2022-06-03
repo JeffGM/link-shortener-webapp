@@ -2,7 +2,6 @@ class StringCryptUtil {
     constructor(bcrypt) {
         this.bcrypt = bcrypt;
         this.saltRounds = 10;
-
     } 
 
     encrypt(stringToEncrypt) {
