@@ -8,10 +8,7 @@ class AccountService {
     }
 
     createAccount(username, email, password) {
-        let isEmailValid = this.validateEmail(email);
-        if (!isEmailValid) {
-            throw new Error("Invalid email!")
-        }
+        this.validateEmail(email);
 
         let encryptedPassword = this.stringEncryptorUtil.encrypt(password)
         let newAccount = new Account(username, email, encryptedPassword);   
@@ -43,6 +40,9 @@ class AccountService {
 
     validateEmail(email) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
+        let isEmailValid = re.test(String(email).toLowerCase());
+        if (!isEmailValid) {
+            throw new Error("Invalid email!")
+        }
     }
 }
