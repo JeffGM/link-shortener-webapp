@@ -1,23 +1,23 @@
 import Account from "Account.js";
 
 class AccountService {
-    constructor(accountRepositoryAdapter, stringEncryptorUtil, jwtUtil) {
+    constructor(accountRepositoryAdapter, stringCryptUtil, jwtUtil) {
         this.accountRepositoryAdapter = accountRepositoryAdapter;
-        this.stringEncryptor = stringEncryptorUtil;
+        this.stringCryptUtil = stringCryptUtil;
         this.jwtUtil = jwtUtil;
     }
 
     createAccount(username, email, password) {
         this.validateEmail(email);
 
-        let encryptedPassword = this.stringEncryptorUtil.encrypt(password)
+        let encryptedPassword = this.stringCryptUtil.encrypt(password)
         let newAccount = new Account(username, email, encryptedPassword);   
         this.accountRepositoryAdapter.saveAccount(newAccount);
     }
 
     login(username, password) {
         this.validateLoginParams(username, password);
-        let encryptedPassword = this.stringEncryptorUtil.encrypt(password);
+        let encryptedPassword = this.stringCryptUtil.encrypt(password);
 
         let loggedAccount = this.accountRepositoryAdapter.getAccountByUsernameAndPassword(username, encryptedPassword);
 
