@@ -38,6 +38,20 @@ class AccountService {
         }
     }
 
+    validateNewAccountFields(username, email, password) {
+        this.validateEmail(email);
+
+        if (!username) {
+            throw new Error("Account must have an username!");
+        }
+        if (!password) {
+            throw new Error("Account must have an password!");
+        }
+        if (password.lenght < 8) {
+            throw new Error("Account password must have at least 8 characters!");
+        }
+    }
+
     validateEmail(email) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let isEmailValid = re.test(String(email).toLowerCase());
