@@ -1,16 +1,16 @@
-import Account from "Account.js";
+import { Account } from "./Account.js";
 
-class AccountService {
-    constructor(accountRepositoryAdapter, stringCryptUtil, jwtUtil) {
+export default class AccountService {
+    constructor(accountRepositoryAdapter, stringCryptUtils, jwtUtils) {
         this.accountRepositoryAdapter = accountRepositoryAdapter;
-        this.stringCryptUtil = stringCryptUtil;
-        this.jwtUtil = jwtUtil;
+        this.stringCryptUtils = stringCryptUtils;
+        this.jwtUtils = jwtUtils;
     }
 
     createAccount(username, email, password) {
         this.#validateNewAccountFields(username, email, password);
 
-        let encryptedPassword = this.stringCryptUtil.encrypt(password)
+        let encryptedPassword = this.stringCryptUtils.encrypt(password)
         let newAccount = new Account(username, email, encryptedPassword);   
         this.accountRepositoryAdapter.saveAccount(newAccount);
     }
@@ -24,13 +24,13 @@ class AccountService {
             throw new Error("No account found with the specified credentials!");
         }
 
-        let isTheSamePassword = this.stringCryptUtil.compare(password, desiredAccount.getPassword());
+        let isTheSamePassword = this.stringCryptUtils.compare(password, desiredAccount.getPassword());
 
         if (!isTheSamePassword) {
             throw new Error("No account found with the specified credentials!");
         }
 
-        return this.jwtUtil.getTokenForAccount(email);
+        return this.jwtUtils.getTokenForAccount(email);
     }
 
     #validateLoginParams(email, password) {
