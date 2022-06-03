@@ -1,7 +1,13 @@
 export default class AccountRepositoryAdapter {
-    saveAccount(account) {
-        console.log("saved account!"); //TODO: implement
+    constructor(databasePort) {
+        this.databasePort = databasePort;
     }
+
+    saveAccount(account) {
+        let accountSerialized = account.getSerialized();
+        this.databasePort.insertOne('account', accountSerialized);
+    }
+
 
     getAccountByUsername(username) {
         console.log("found account by username!"); //TODO: implement

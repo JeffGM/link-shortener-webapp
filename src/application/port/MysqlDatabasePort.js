@@ -1,10 +1,11 @@
 export default class MysqlDatabasePort {
-    constructor(host, user, password, database) {
-        this.connection =  mysql.createConnection({
+    constructor(driver, host, user, password, database, port) {
+        this.connection =  driver.createConnection({
             host     : host,
             user     : user,
             password : password,
-            database : database
+            database : database,
+            port     : port
           });
     }
 
@@ -13,8 +14,8 @@ export default class MysqlDatabasePort {
         let paramsNames = Object.keys(withParams);
         let paramsValues = Object.values(withParams);
 
-        sqlStatement += paramsNames.join(",") + ') VALUES(';
-        sqlStatement += paramsValues.join(",");
+        sqlStatement += paramsNames.join(',') + ') VALUES(';
+        sqlStatement += '"' + paramsValues.join('","') + '")';
 
         return this.#executeStatement(sqlStatement);
     }
@@ -47,9 +48,11 @@ export default class MysqlDatabasePort {
     }
 
     async #executeStatement(sqlStatement) {
-        return await connection.query(sqlStatement, function(err, rows, fields) {
+        let result = this.connection.query(sqlStatement, function(err, rows, fields) {
             if (err) throw err;
             return rows;
         });
+
+        return await result;
     }
 }

@@ -16,4 +16,12 @@ export class Account {
     getPassword() {
         return this.password;
     }
+
+    getSerialized() {
+        return {
+            username: this.getUsername(),
+            email: this.getEmail(),
+            password: this.getPassword()
+        }
+    }
 }
