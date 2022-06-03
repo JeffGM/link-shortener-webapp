@@ -28,7 +28,7 @@ class AccountService {
         return this.jwtUtil.getTokenForAccount(email);
     }
 
-    validateLoginParams(email, password) {
+    #validateLoginParams(email, password) {
         if (!email) {
             throw new Error("An email must be informed to log in!");
         }
@@ -38,7 +38,7 @@ class AccountService {
         }
     }
 
-    validateNewAccountFields(username, email, password) {
+    #validateNewAccountFields(username, email, password) {
         this.validateEmail(email);
 
         if (!username) {
@@ -52,7 +52,7 @@ class AccountService {
         }
     }
 
-    validateEmail(email) {
+    #validateEmail(email) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let isEmailValid = re.test(String(email).toLowerCase());
         if (!isEmailValid) {
