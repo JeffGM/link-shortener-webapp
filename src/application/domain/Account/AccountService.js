@@ -8,7 +8,7 @@ class AccountService {
     }
 
     createAccount(username, email, password) {
-        this.validateEmail(email);
+        this.#validateNewAccountFields(username, email, password);
 
         let encryptedPassword = this.stringCryptUtil.encrypt(password)
         let newAccount = new Account(username, email, encryptedPassword);   
@@ -16,7 +16,7 @@ class AccountService {
     }
 
     login(username, password) {
-        this.validateLoginParams(username, password);
+        this.#validateLoginParams(username, password);
         let encryptedPassword = this.stringCryptUtil.encrypt(password);
 
         let loggedAccount = this.accountRepositoryAdapter.getAccountByUsernameAndPassword(username, encryptedPassword);
@@ -39,7 +39,7 @@ class AccountService {
     }
 
     #validateNewAccountFields(username, email, password) {
-        this.validateEmail(email);
+        this.#validateEmail(email);
 
         if (!username) {
             throw new Error("Account must have an username!");
