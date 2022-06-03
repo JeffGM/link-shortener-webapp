@@ -7,22 +7,22 @@ class AccountService {
         this.jwtUtil = jwtUtil;
     }
 
-    createAccount(email, password) {
+    createAccount(username, email, password) {
         let isEmailValid = this.validateEmail(email);
         if (!isEmailValid) {
             throw new Error("Invalid email!")
         }
 
         let encryptedPassword = this.stringEncryptorUtil.encrypt(password)
-        let newAccount = new Account(email, encryptedPassword);   
+        let newAccount = new Account(username, email, encryptedPassword);   
         this.accountRepositoryAdapter.saveAccount(newAccount);
     }
 
-    login(email, password) {
-        this.validateLoginParams(email, password);
+    login(username, password) {
+        this.validateLoginParams(username, password);
         let encryptedPassword = this.stringEncryptorUtil.encrypt(password);
 
-        let loggedAccount = this.accountRepositoryAdapter.getAccount(email, encryptedPassword);
+        let loggedAccount = this.accountRepositoryAdapter.getAccountByUsernameAndPassword(username, encryptedPassword);
 
         if (!loggedAccount) {
             throw new Error("No account found with the specified credentials!");

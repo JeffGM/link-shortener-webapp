@@ -1,10 +1,15 @@
 class Account {
-    constructor(email, password) {
-        this.validateFields(email, password);
+    constructor(username, email, password) {
+        this.validateFields(username, email, password);
+        this.username = username;
         this.email = email;
         this.password = password;
     }
-    
+
+    getUsername() {
+        return this.username;
+    }
+
     getEmail() {
         return this.email;
     }
@@ -13,7 +18,10 @@ class Account {
         return this.password;
     }
 
-    validateFields(email, password) {
+    validateFields(username, email, password) {
+        if (!username) {
+            throw new Error("Account must have an username!");
+        }
         if (!email) {
             throw new Error("Account must have an email!");
         }
