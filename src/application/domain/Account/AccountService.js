@@ -17,11 +17,16 @@ class AccountService {
 
     login(username, password) {
         this.#validateLoginParams(username, password);
-        let encryptedPassword = this.stringCryptUtil.encrypt(password);
 
-        let loggedAccount = this.accountRepositoryAdapter.getAccountByUsernameAndPassword(username, encryptedPassword);
+        let desiredAccount = this.accountRepositoryAdapter.getAccountByUsername(username);
 
-        if (!loggedAccount) {
+        if (!desiredAccount) {
+            throw new Error("No account found with the specified credentials!");
+        }
+
+        let isTheSamePassword = this.stringCryptUtil.compare(password, desiredAccount.getPassword());
+
+        if (!isTheSamePassword) {
             throw new Error("No account found with the specified credentials!");
         }
 
