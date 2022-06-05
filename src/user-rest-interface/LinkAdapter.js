@@ -20,7 +20,20 @@ export default class LinkAdapter {
 
         try {
             dependencyContainer["linkService"].addLinkPassword(owner, shortenedUrl, password);
-            console.log("Returned from addLinkPassword service");
+        } catch(err) {
+            return res.status(422).send(err.message);
+        }
+
+        return res.send(200, "Success!");
+    }
+
+    static addLinkExpirationDate(req, res, dependencyContainer) {
+        let owner = req.body.username;
+        let shortenedUrl = req.body.url;
+        let expirationDate = req.body.date;
+
+        try {
+            dependencyContainer["linkService"].addLinkExpirationDate(owner, shortenedUrl, expirationDate);
         } catch(err) {
             return res.status(422).send(err.message);
         }

@@ -8,6 +8,8 @@ export default function(app, dependencyContainer) {
     app.post('/login', (req, res) => AccountAdapter.login(req, res, dependencyContainer))
     app.post('/link', (req, res) => LinkAdapter.createLink(req, res, dependencyContainer))
     app.post('/password', (req, res) => LinkAdapter.addLinkPassword(req, res, dependencyContainer))
+    app.post('/expiration', (req, res) => LinkAdapter.addLinkExpirationDate(req, res, dependencyContainer))
+
 
     //web pages
     app.get('/login', (req, res) => WebNavigationAdapter.presentLoginPage(req, res, dependencyContainer))

@@ -31,6 +31,17 @@ export default class LinkRepositoryAdapter {
         this.databasePort.updateOne('link', byParams, where);
     }
 
+    updateLinkExpirationDate(owner, shortenedUrl, expirationDate) {
+        let byParams = {
+            expirationDate: expirationDate
+        };
+        let where = {
+            owner: owner,
+            shortenedUrl: shortenedUrl
+        };
+        this.databasePort.updateOne('link', byParams, where);
+    }
+
     #createLinkEntityFromQueryResult({
         originalUrl,
         shortenedUrl,
