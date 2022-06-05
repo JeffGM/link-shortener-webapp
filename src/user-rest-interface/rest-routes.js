@@ -11,4 +11,6 @@ export default function(app, dependencyContainer) {
 
     //web pages
     app.get('/login', (req, res) => WebNavigationAdapter.presentLoginPage(req, res, dependencyContainer))
+    app.get('/register', (req, res) => WebNavigationAdapter.presentRegisterPage(req, res, dependencyContainer))
+
 }
