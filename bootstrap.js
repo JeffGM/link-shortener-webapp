@@ -8,16 +8,21 @@ import LinkRepositoryAdapter from "./src/infrastructure/LinkRepositoryAdapter.js
 import MysqlDatabasePort from "./src/application/port/MysqlDatabasePort.js";
 import bcrypt from 'bcrypt';
 import mysql from 'sync-mysql';
+import jwt from 'jsonwebtoken';
+import path from 'path';
+import WebNavigationAdapter from "./src/user-rest-interface/WebNavigationAdapter.js";
 
 let mysqlDatabasePort = new MysqlDatabasePort(mysql, "localhost", "root", "admin", "pds", 3306);
-let jwtUtils = new JwtUtils("my-secret-pass");
+let jwtUtils = new JwtUtils(jwt, "my-secret-pass");
 let stringCryptoUtils = new StringCryptoUtils(bcrypt);
 
 let accountRepositoryAdapter = new AccountRepositoryAdapter(mysqlDatabasePort);
-let accountService = new AccountService(accountRepositoryAdapter, stringCryptoUtils, accountRepositoryAdapter);
+let accountService = new AccountService(accountRepositoryAdapter, stringCryptoUtils, jwtUtils);
 
 let linkRepositoryAdapter = new LinkRepositoryAdapter(mysqlDatabasePort);
 let linkService = new LinkService(linkRepositoryAdapter, stringCryptoUtils, urlShorteningUtils);
+
+let webNavigationAdapter = new WebNavigationAdapter(path);
 
 let dependencyContainer = {
     "stringCryptoUtils": stringCryptoUtils,
@@ -26,7 +31,9 @@ let dependencyContainer = {
     "accountRepository": accountRepositoryAdapter,
     "accountService": accountService,
     "linkRepository": linkRepositoryAdapter,
-    "linkService": linkService
+    "linkService": linkService,
+    "webNavigationAdapter": webNavigationAdapter,
+    "path": path
 };
 
 export default dependencyContainer;
