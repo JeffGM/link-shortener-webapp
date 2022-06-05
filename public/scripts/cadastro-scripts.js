@@ -1,24 +1,42 @@
-$("#formLogin").submit(function(e){
+$("#formCadastro").submit(function(e){
     e.preventDefault();
 
     let body = {};
     body["username"] = $("#username").val();
+    body["email"] = $("#email").val();
     body["password"] = $("#password").val();
+    body["rePassword"] = $("#rePassword").val();
+
+    if (body["password"] !== body["rePassword"]) {
+        Swal.fire(
+            'Erro!',
+            'Password and password confirmation dont match!',
+            'error'
+        );
+        return;
+    } 
 
     console.log(body);
     $.ajax({
         type: "POST",
-        url: "/login",
+        url: "/account",
         data: JSON.stringify(body),
         contentType: "application/json",  
             success: function(response){
-               window.localStorage.setItem("jwtToken", response["authToken"])
-               window.location.replace("/dashboard");
+               Swal.fire(
+                   'Success!',
+                   'Your account was created! You will be redirected to the login page',
+                   'success'
+               )
+
+                setTimeout(function(){
+                    window.location.replace("/login");                
+                }, 3000);
             },
             error: function (request, status, error) {
                 Swal.fire(
-                    'Erro!',
-                    'Email ou senha inválidos',
+                    'Error!',
+                    request.responseText,
                     'error'
                 )
             }

@@ -17,8 +17,8 @@ $("#formLogin").submit(function(e){
             },
             error: function (request, status, error) {
                 Swal.fire(
-                    'Erro!',
-                    'Email ou senha inválidos',
+                    'Error!',
+                    'Email or password invalid!',
                     'error'
                 )
             }
