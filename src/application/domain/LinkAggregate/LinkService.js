@@ -1,4 +1,4 @@
-import Link from "./Link.js"
+import Link from "./Link.js";
 
 export default class LinkService {
     constructor(linkRepositoryAdapter, stringCryptUtils, urlShorteningUtils) {
@@ -32,9 +32,18 @@ export default class LinkService {
 
     // }
 
-    // addLinkPassword() {
+    addLinkPassword(owner, shortenedUrl, password) {
+        this.#validateLinkPasswordParams(owner, shortenedUrl, password);
 
-    // }
+        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+
+        if (!link) {
+            throw new Error("Couldn't find specified link!");
+        }
+        
+        let encryptedPassword = this.stringCryptUtils.encrypt(password);
+        this.linkRepositoryAdapter.updateLinkPassword(owner, shortenedUrl, encryptedPassword);
+    }
 
     // addLinkExpirationDate() {
 
@@ -50,6 +59,21 @@ export default class LinkService {
         }
         if (!originalUrl) {
             throw new Error("Link must have an original url!");
+        }
+    }
+
+    #validateLinkPasswordParams(owner, shortenedUrl, password) {
+        if (!owner) {
+            throw new Error("A owner must be specified to add a link password!");
+        }
+        if (!shortenedUrl) {
+            throw new Error("User must specify which link to add the password to!");
+        }
+        if (!password) {
+            throw new Error("User must provide a link password!");
+        }
+        if (password.length < 1) {
+            throw new Error("Link password must have at least one character!");
         }
     }
 }
