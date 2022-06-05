@@ -33,21 +33,29 @@ export default class LinkService {
     // }
 
     addLinkPassword(owner, shortenedUrl, password) {
-        this.#validateLinkPasswordParams(owner, shortenedUrl, password);
+        this.#validateAddLinkPasswordParams(owner, shortenedUrl, password);
 
         let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
 
         if (!link) {
-            throw new Error("Couldn't find specified link!");
+            throw new Error("Couldn't find specified link for this user!");
         }
         
         let encryptedPassword = this.stringCryptUtils.encrypt(password);
         this.linkRepositoryAdapter.updateLinkPassword(owner, shortenedUrl, encryptedPassword);
     }
 
-    // addLinkExpirationDate() {
+    addLinkExpirationDate(owner, shortenedUrl, expirationDate) {
+        this.#validateAddLinkExpirationDateParams(owner, shortenedUrl, expirationDate);
 
-    // }
+        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+
+        if (!link) {
+            throw new Error("Couldn't find specified link for this user!");
+        }
+
+        this.linkRepositoryAdapter.updateLinkExpirationDate(owner, shortenedUrl, expirationDate);
+    }
 
     // checkLinkStats() {
 
@@ -62,7 +70,7 @@ export default class LinkService {
         }
     }
 
-    #validateLinkPasswordParams(owner, shortenedUrl, password) {
+    #validateAddLinkPasswordParams(owner, shortenedUrl, password) {
         if (!owner) {
             throw new Error("A owner must be specified to add a link password!");
         }
@@ -74,6 +82,27 @@ export default class LinkService {
         }
         if (password.length < 1) {
             throw new Error("Link password must have at least one character!");
+        }
+    }
+
+    #validateAddLinkExpirationDateParams(owner, shortenedUrl, expirationDate) {
+        if (!owner) {
+            throw new Error("A owner must be specified to add a link expiration date!");
+        }
+        if (!shortenedUrl) {
+            throw new Error("User must specify which link to add the expiration date to!");
+        }
+        if (!expirationDate) {
+            throw new Error("User must provide a link expiration date!");
+        }
+        this.#validateDateFormat(expirationDate);
+    }
+
+    #validateDateFormat(date) {
+        const re = /(\d{4})-(\d{2})-(\d{2})/;
+        let isDateValid = re.test(String(date));
+        if (!isDateValid) {
+            throw new Error("Invalid date!")
         }
     }
 }
