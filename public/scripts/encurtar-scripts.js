@@ -1,7 +1,11 @@
 $(document).on('change','#checkSenha',function(){
-    if(this.checked){
-        $("#fieldSenha").show();
-    } else {
-        $("#fieldSenha").hide();
+    try{
+        if(this.checked){
+            $("#fieldSenha").show();
+        } else {
+            $("#fieldSenha").hide();
+        }
+    } catch {
+        console.log('Erro: Não foi possível alterar exibição do fieldSenha')
     }
 });
