@@ -20,7 +20,6 @@ export default class LinkAdapter {
 
         try {
             dependencyContainer["linkService"].addLinkPassword(owner, shortenedUrl, password);
-            console.log("Returned from addLinkPassword service");
         } catch(err) {
             return res.status(422).send(err.message);
         }
