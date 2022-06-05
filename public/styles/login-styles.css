@@ -1,26 +1,9 @@
-.center{
-    margin: auto;
-    margin-top: 50px;
-    width: 30%;
-}
-
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#titulo {
-    margin-top: 25px;
-}
-
-#formCadastro {
+#formLogin {
     margin-top: 25px;
     text-align: left;
-    
 }
 
-#formCadastro button{
+#formLogin button{
     margin-top: 5px;
     background-color: #0d6efd;
     color: white;
