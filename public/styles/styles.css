@@ -28,6 +28,11 @@
     font-style: italic;
 }
 
+#sidebar .current {
+    color: white;
+    background: #0d6efd;
+}
+
 #sidebar ul{
     margin-right: 10px;
 }
@@ -48,14 +53,12 @@
 
 #content input{
     border-color: black;
+    border-radius: 3px;
+    border-width: 0.1em;
 }
 
 #content input:focus{
     border-color: #0d6efd;
-}
-
-#fieldSenha input{
-    border-width: 0.1em;
 }
 
 /* MEDIAQUERIES */

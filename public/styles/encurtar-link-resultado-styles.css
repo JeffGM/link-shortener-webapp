@@ -1,0 +1,22 @@
+#content-header  h5{
+    margin-bottom: 25px;
+}
+#content-header  h1{
+    margin-bottom: 25px;
+}
+
+#content div span{
+    margin-left: 15px;
+}
+
+#content div span button{
+    margin-left: 15px;
+}
+
+#content div p{
+    margin-top: 25px;
+}
+
+#content div p em{
+    font-weight: bold;
+}

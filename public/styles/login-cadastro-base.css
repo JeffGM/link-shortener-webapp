@@ -1,0 +1,15 @@
+.center{
+    margin: auto;
+    margin-top: 10px;
+    width: 30%;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#titulo {
+    margin-top: 25px;
+}
