@@ -26,8 +26,8 @@
 
             <nav class="nav flex-column">
                 <a class="nav-link" href="#">Dashboard</a>
-                <a class="nav-link active" href="#">Encurtar Link</a>
-                <a class="nav-link" href="#">Configurações de Links</a>
+                <a class="nav-link" href="#">Encurtar Link</a>
+                <a class="nav-link" href="#">Configurar Links</a>
               </nav>
 
             <hr />
@@ -52,11 +52,11 @@
                 <div id="formulario">
                 <form>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="https://... " aria-label="url to shorten" aria-describedby="button-addon" >
+                        <input type="text" id="linkfield" class="form-control" placeholder="https://... " aria-label="url to shorten" aria-describedby="button-addon" >
                         <button class="btn btn-primary" type="button" id="button-addon">Encurtar!</button>
                     </div>
-                </form>
-            </div>
+                </form> 
+            </div> 
             <div class="mt-5">
                 <h3>Opções</h3>
                 <div class="form-check">
@@ -70,7 +70,7 @@
                     <label class="form-check-label" for="checkSenha">
                         Habilitar Senha ?
                     </label>
-                    <span id="fieldSenha"><input type="text"></span>
+                    <span id="fieldSenha" style="display: none;"><input type="text"></span>
                 </div>
             </div>
         </div>

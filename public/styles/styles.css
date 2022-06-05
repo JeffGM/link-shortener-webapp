@@ -56,6 +56,12 @@
 
 #fieldSenha input{
     border-width: 0.1em;
+    border-radius: 3px;
+}
+
+#linkfield {
+    border-radius: 3px;
+    border-width: 0.1em;
 }
 
 /* MEDIAQUERIES */
