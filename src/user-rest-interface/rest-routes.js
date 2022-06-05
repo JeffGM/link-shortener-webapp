@@ -1,6 +1,7 @@
 import AccountAdapter from "./AccountAdapter.js";
 import LinkAdapter from "./LinkAdapter.js";
 import WebNavigationAdapter from "./WebNavigationAdapter.js";
+import AuthMiddleware from "./AuthMiddleware.js";
 
 export default function(app, dependencyContainer) {
     //api requests
@@ -14,5 +15,9 @@ export default function(app, dependencyContainer) {
     //web pages
     app.get('/login', (req, res) => WebNavigationAdapter.presentLoginPage(req, res, dependencyContainer))
     app.get('/register', (req, res) => WebNavigationAdapter.presentRegisterPage(req, res, dependencyContainer))
+    
+    app.get('/dashboard',
+        (req, res, next) => AuthMiddleware.authenticate(req, res, next, dependencyContainer), 
+        (req, res) => WebNavigationAdapter.presentDashboard(req, res, dependencyContainer))
 
 }

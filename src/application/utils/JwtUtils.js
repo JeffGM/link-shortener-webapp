@@ -7,4 +7,8 @@ export default class JwtUtils {
     getTokenForAccount(username) {
         return this.jwt.sign({account: username}, this.secretKey);
     }
+
+    getAccountFromToken(token) {
+        return this.jwt.verify(token, this.secretKey);
+    }
 }

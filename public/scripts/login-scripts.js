@@ -5,7 +5,6 @@ $("#formLogin").submit(function(e){
     body["username"] = $("#username").val();
     body["password"] = $("#password").val();
 
-    console.log(body);
     $.ajax({
         type: "POST",
         url: "/login",

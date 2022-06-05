@@ -8,4 +8,14 @@ export default class WebNavigationAdapter {
         let path = dependencyContainer["path"];
         res.sendFile(path.join(path.resolve() + '/src/views/cadastro.html'))
     }
+
+    static presentBaseUrl(req, res, dependencyContainer) {
+        let path = dependencyContainer["path"];
+        res.sendFile(path.join(path.resolve() + '/src/views/cadastro.html'))
+    }
+
+    static presentDashboard(req, res, dependencyContainer) {
+        let path = dependencyContainer["path"];
+        res.sendFile(path.join(path.resolve() + '/src/views/cadastro.html'))
+    }
 }
