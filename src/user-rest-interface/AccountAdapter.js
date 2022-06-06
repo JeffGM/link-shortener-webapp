@@ -24,9 +24,7 @@ export default class AccountAdapter {
             return res.status(403).send(err.message);
         }
 
-        var newDate = new Date();
-        var expDate = newDate.setMonth(newDate.getMonth() + 1)
-        res.cookie('id', authToken, { sameSite: true, maxAge: expDate });
+        res.cookie('jwt', authToken);
 
         return res.json({authToken: authToken});
     }

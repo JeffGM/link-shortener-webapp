@@ -4,8 +4,13 @@ export default class AuthMiddleware {
         const authCookie = req.cookies["jwt"];
 
         const authToken = authHeader ? authHeader : authCookie;
-        
-        const token = authToken && authHeader.split(' ')[1];
+        let token;
+
+        if (authHeader) {
+            token = authHeader.split(' ')[1]
+        } else if (authCookie) {
+            token = authCookie;
+        }   
       
         if (token == null) return res.sendStatus(401);
 
