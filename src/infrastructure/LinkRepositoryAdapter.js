@@ -11,7 +11,6 @@ export default class LinkRepositoryAdapter {
     }
 
     getLinkByUsernameAndShortenedUrl(owner, shortenedUrl) {
-        console.log("Entered getLinkByUsernameAndShortenedUrl");
         let byParams = {
             owner: owner,
             shortenedUrl: shortenedUrl
@@ -59,7 +58,6 @@ export default class LinkRepositoryAdapter {
         password,
         expirationDate
     }) {
-        console.log("Entered createLinkEntityFromQueryResult");
         let link = new Link(originalUrl, shortenedUrl, owner);
         
         if (activated === 'false') {
