@@ -28,21 +28,29 @@ export default class LinkService {
 
     // }
 
-    // advertizeLink() {
+    advertizeLink(owner, shortenedUrl, ad) {
+        this.#validateAdvertizeLinkParams(owner, shortenedUrl, ad);
 
-    // }
+        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        if (!link) {
+            throw new Error("Couldn't find specified link for this user!");
+        }
+        
+        link.updateAd(ad);
+        this.linkRepositoryAdapter.updateLinkAd(link);
+    }
 
     addLinkPassword(owner, shortenedUrl, password) {
         this.#validateAddLinkPasswordParams(owner, shortenedUrl, password);
 
         let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
-
         if (!link) {
             throw new Error("Couldn't find specified link for this user!");
         }
         
         let encryptedPassword = this.stringCryptUtils.encrypt(password);
-        this.linkRepositoryAdapter.updateLinkPassword(owner, shortenedUrl, encryptedPassword);
+        link.updatePassword(encryptedPassword);
+        this.linkRepositoryAdapter.updateLinkPassword(link);
     }
 
     addLinkExpirationDate(owner, shortenedUrl, expirationDate) {
@@ -54,7 +62,8 @@ export default class LinkService {
             throw new Error("Couldn't find specified link for this user!");
         }
 
-        this.linkRepositoryAdapter.updateLinkExpirationDate(owner, shortenedUrl, expirationDate);
+        link.updateExpirationDate(expirationDate);
+        this.linkRepositoryAdapter.updateLinkExpirationDate(link);
     }
 
     // checkLinkStats() {
@@ -103,6 +112,18 @@ export default class LinkService {
         let isDateValid = re.test(String(date));
         if (!isDateValid) {
             throw new Error("Invalid date!")
+        }
+    }
+
+    #validateAdvertizeLinkParams(owner, shortenedUrl, ad) {
+        if (!owner) {
+            throw new Error("A owner must be specified to add a link advert!");
+        }
+        if (!shortenedUrl) {
+            throw new Error("User must specify which link to add the advert to!");
+        }
+        if (!ad) {
+            throw new Error("User must provide a link advert!");
         }
     }
 }

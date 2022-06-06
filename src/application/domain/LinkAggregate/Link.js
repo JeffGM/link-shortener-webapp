@@ -8,8 +8,8 @@ export default class Link {
         this.shortenedUrl = shortenedUrl;
         this.owner = owner;
         this.activated = true;
-        this.stats = new LinkStatistics();
-        this.config = new LinkConfig();
+        this.stats = new LinkStatistics({});
+        this.config = new LinkConfig({});
     }
 
     getOriginalUrl() {
@@ -40,12 +40,24 @@ export default class Link {
         return this.config;
     }
 
-    updateStats(numberOfClicks, profit) {
-        this.stats = new LinkStatistics(numberOfClicks, profit);
+    updateNumberOfClicks(numberOfClicks) {
+        this.config = new LinkStatistics({numberOfClicks});
     }
 
-    updateConfig(ad, password, expirationDate) {
-        this.config = new LinkConfig(ad, password, expirationDate);
+    updateProfit(profit) {
+        this.config = new LinkStatistics({profit});
+    }
+
+    updateAd(ad) {
+        this.config = new LinkConfig({ad});
+    }
+
+    updatePassword(password) {
+        this.config = new LinkConfig({password});
+    }
+
+    updateExpirationDate(expirationDate) {
+        this.config = new LinkConfig({expirationDate});
     }
 
     getSerialized() {
