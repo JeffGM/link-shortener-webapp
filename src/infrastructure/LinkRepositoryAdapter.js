@@ -47,6 +47,18 @@ export default class LinkRepositoryAdapter {
         this.databasePort.updateOne('link', byParams, where);
     }
 
+    updateLinkAd(link) {
+        const {ad, owner, shortenedUrl} = link.getSerialized();
+        let byParams = {
+            ad: ad
+        };
+        let where = {
+            owner: owner,
+            shortenedUrl: shortenedUrl
+        };
+        this.databasePort.updateOne('link', byParams, where);
+    }
+
     #createLinkEntityFromQueryResult({
         originalUrl,
         shortenedUrl,

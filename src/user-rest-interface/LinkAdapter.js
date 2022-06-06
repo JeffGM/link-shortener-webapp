@@ -40,4 +40,18 @@ export default class LinkAdapter {
 
         return res.send(200, "Success!");
     }
+
+    static advertizeLink(req, res, dependencyContainer) {
+        let owner = req.body.username;
+        let shortenedUrl = req.body.url;
+        let ad = req.body.ad;
+
+        try {
+            dependencyContainer["linkService"].advertizeLink(owner, shortenedUrl, ad);
+        } catch(err) {
+            return res.status(422).send(err.message);
+        }
+
+        return res.send(200, "Success!");
+    }
 }

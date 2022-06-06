@@ -10,6 +10,7 @@ export default function(app, dependencyContainer) {
     app.post('/link', (req, res) => LinkAdapter.createLink(req, res, dependencyContainer))
     app.post('/password', (req, res) => LinkAdapter.addLinkPassword(req, res, dependencyContainer))
     app.post('/expiration', (req, res) => LinkAdapter.addLinkExpirationDate(req, res, dependencyContainer))
+    app.post('/ad', (req, res) => LinkAdapter.advertizeLink(req, res, dependencyContainer))
 
 
     //web pages
