@@ -16,13 +16,29 @@ export default class LinkRepositoryAdapter {
             shortenedUrl: shortenedUrl
         };
         let queryResult = this.databasePort.selectOne('link', byParams);
-        let link = this.#createLinkEntityFromQueryResult(queryResult);
+        if (queryResult.length === 0) {
+            return;
+        }
+        let link = this.#createLinkEntityFromQueryResult(queryResult[0]);
         return link;
     }
 
-    updateLinkPassword(owner, shortenedUrl, password) {
+    updateLinkPassword(link) {
+        const {password, owner, shortenedUrl} = link.getSerialized();
         let byParams = {
             password: password
+        };
+        let where = {
+            owner: owner,
+            shortenedUrl: shortenedUrl
+        };
+        this.databasePort.updateOne('link', byParams, where);
+    }
+
+    updateLinkExpirationDate(link) {
+        const {expirationDate, owner, shortenedUrl} = link.getSerialized();
+        let byParams = {
+            expirationDate: expirationDate
         };
         let where = {
             owner: owner,
@@ -47,11 +63,20 @@ export default class LinkRepositoryAdapter {
         if (activated === 'false') {
             link.deactivate();
         }
-        if (numberOfClicks !== 0 || profit !== 0) {
-            link.updateStats(numberOfClicks, profit);
+        if (numberOfClicks !== 0) {
+            link.updateNumberOfClicks(numberOfClicks);
         }
-        if (ad || password || expirationDate) {
-            link.updateConfig(ad, password, expirationDate);
+        if (profit !== 0) {
+            link.updateProfit(profit);
+        }
+        if (ad) {
+            link.updateAd(ad);
+        }
+        if (password) {
+            link.updatePassword(password);
+        }
+        if (expirationDate) {
+            link.updateExpirationDate(expirationDate);
         }
 
         return link;

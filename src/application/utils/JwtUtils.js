@@ -4,7 +4,11 @@ export default class JwtUtils {
         this.secretKey = secretKey;
     }
 
-    getTokenForAccount(email) {
-        return this.jwt.sign({account: email}, this.secretKey);
+    getTokenForAccount(username) {
+        return this.jwt.sign({account: username}, this.secretKey);
+    }
+
+    getAccountFromToken(token) {
+        return this.jwt.verify(token, this.secretKey);
     }
 }

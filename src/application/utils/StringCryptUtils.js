@@ -9,6 +9,6 @@ export default class StringCryptUtils {
     }
 
     compare(stringToCheck, hashedString) {
-        return  bcrypt.compareSync(stringToCheck, hashedString);
+        return this.bcrypt.compareSync(stringToCheck, hashedString);
     }
 }

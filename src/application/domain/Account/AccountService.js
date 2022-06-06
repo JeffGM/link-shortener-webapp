@@ -37,7 +37,7 @@ export default class AccountService {
             throw new Error("No account found with the specified credentials!");
         }
 
-        return this.jwtUtils.getTokenForAccount(email);
+        return this.jwtUtils.getTokenForAccount(username);
     }
 
     #validateLoginParams(email, password) {
