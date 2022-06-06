@@ -29,7 +29,7 @@ export default class LinkService {
     }
 
     followLink(owner, shortenedUrl, password, seenAd) {
-        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        let {link} = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
 
         if (!link) {
             throw new Error("Couldn't find specified link for this user!");
@@ -68,7 +68,7 @@ export default class LinkService {
     advertizeLink(owner, shortenedUrl, ad) {
         this.#validateAdvertizeLinkParams(owner, shortenedUrl, ad);
 
-        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        let {link} = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
         if (!link) {
             throw new Error("Couldn't find specified link for this user!");
         }
@@ -80,7 +80,7 @@ export default class LinkService {
     addLinkPassword(owner, shortenedUrl, password) {
         this.#validateAddLinkPasswordParams(owner, shortenedUrl, password);
 
-        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        let {link} = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
         if (!link) {
             throw new Error("Couldn't find specified link for this user!");
         }
@@ -93,7 +93,7 @@ export default class LinkService {
     addLinkExpirationDate(owner, shortenedUrl, expirationDate) {
         this.#validateAddLinkExpirationDateParams(owner, shortenedUrl, expirationDate);
 
-        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        let {link} = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
 
         if (!link) {
             throw new Error("Couldn't find specified link for this user!");
@@ -104,7 +104,7 @@ export default class LinkService {
     }
 
     // checkLinkStats() {
-
+      
     // }
 
     #validateNewLinkFields(owner, originalUrl) {
