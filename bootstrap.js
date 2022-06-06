@@ -11,6 +11,8 @@ import mysql from 'sync-mysql';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import WebNavigationAdapter from "./src/user-rest-interface/WebNavigationAdapter.js";
+import AdService from "./src/application/domain/Ad/AdService.js";
+import AdRepositoryAdapter from "./src/infrastructure/AdRepositoryAdapter.js";
 
 let mysqlDatabasePort = new MysqlDatabasePort(mysql, "localhost", "root", "admin", "pds", 3306);
 let jwtUtils = new JwtUtils(jwt, "my-secret-pass");
@@ -21,6 +23,9 @@ let accountService = new AccountService(accountRepositoryAdapter, stringCryptoUt
 
 let linkRepositoryAdapter = new LinkRepositoryAdapter(mysqlDatabasePort);
 let linkService = new LinkService(linkRepositoryAdapter, stringCryptoUtils, urlShorteningUtils);
+
+let adRepositoryAdapter = new AdRepositoryAdapter(mysqlDatabasePort);
+let adService = new AdService(adRepositoryAdapter);
 
 let webNavigationAdapter = new WebNavigationAdapter(path);
 
@@ -33,6 +38,8 @@ let dependencyContainer = {
     "linkRepository": linkRepositoryAdapter,
     "linkService": linkService,
     "webNavigationAdapter": webNavigationAdapter,
+    "adService": adService,
+    "adRepositoryAdapter": adRepositoryAdapter,
     "path": path
 };
 

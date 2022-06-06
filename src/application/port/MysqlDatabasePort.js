@@ -24,30 +24,6 @@ export default class MysqlDatabasePort {
         return this.select(entityName, byParams, 1);
     }
 
-    // select(entityName, byParams, limit) {
-    //     console.log("Entered select");
-    //     let sqlStatement = 'SELECT * FROM "' + entityName;
-
-    //     if (byParams) {
-    //         sqlStatement += ' WHERE';
-    //         let paramsCount = Object.keys(byParams).length;
-    //         let currentParam = 1;
-
-    //         Object.keys(byParams).forEach(function(paramName) {
-    //             let paramValue = obj[paramName];
-    //             sqlStatement += ' ' + paramName + '= "' + this.connection.escape(paramValue);
-    //             if (currentParam > 1 && currentParam != paramsCount) {
-    //                 sqlStatement += ' AND';
-    //             }
-
-    //             currentParam++;
-    //         });
-    //     }
-
-    //     sqlStatement += ' LIMIT ' + limit
-    //     return this.#executeStatement(sqlStatement);
-    // }
-
     select(entityName, byParams, limit) {
         let sqlStatement = `SELECT * FROM ${entityName}`;
         let placeHolderValues = [];
@@ -62,9 +38,9 @@ export default class MysqlDatabasePort {
                 sqlStatement += ' AND';
             });
 
+            sqlStatement = sqlStatement.slice(0, -4);
         }
-
-        sqlStatement = sqlStatement.slice(0, -4);
+        
         sqlStatement += ` LIMIT ${limit}`;
         return this.#executeStatement(sqlStatement, placeHolderValues);
     }

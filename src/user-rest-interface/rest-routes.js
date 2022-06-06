@@ -2,6 +2,7 @@ import AccountAdapter from "./AccountAdapter.js";
 import LinkAdapter from "./LinkAdapter.js";
 import WebNavigationAdapter from "./WebNavigationAdapter.js";
 import AuthMiddleware from "./AuthMiddleware.js";
+import AdAdapter from "./AdAdapter.js";
 
 export default function(app, dependencyContainer) {
     //api requests
@@ -10,7 +11,7 @@ export default function(app, dependencyContainer) {
     app.post('/link', (req, res) => LinkAdapter.createLink(req, res, dependencyContainer))
     app.post('/password', (req, res) => LinkAdapter.addLinkPassword(req, res, dependencyContainer))
     app.post('/expiration', (req, res) => LinkAdapter.addLinkExpirationDate(req, res, dependencyContainer))
-
+    app.get('/ad', (req, res) => AdAdapter.getAd(req, res, dependencyContainer))
 
     //web pages
     app.get('/login', (req, res) => WebNavigationAdapter.presentLoginPage(req, res, dependencyContainer))
