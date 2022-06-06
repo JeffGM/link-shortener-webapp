@@ -11,16 +11,21 @@ export default class LinkRepositoryAdapter {
     }
 
     getLinkByUsernameAndShortenedUrl(owner, shortenedUrl) {
+        console.log("Entered getLinkByUsernameAndShortenedUrl");
         let byParams = {
             owner: owner,
             shortenedUrl: shortenedUrl
         };
         let queryResult = this.databasePort.selectOne('link', byParams);
-        let link = this.#createLinkEntityFromQueryResult(queryResult);
+        if (queryResult.length === 0) {
+            return;
+        }
+        let link = this.#createLinkEntityFromQueryResult(queryResult[0]);
         return link;
     }
 
-    updateLinkPassword(owner, shortenedUrl, password) {
+    updateLinkPassword(link) {
+        const {password, owner, shortenedUrl} = link.getSerialized();
         let byParams = {
             password: password
         };
@@ -31,7 +36,8 @@ export default class LinkRepositoryAdapter {
         this.databasePort.updateOne('link', byParams, where);
     }
 
-    updateLinkExpirationDate(owner, shortenedUrl, expirationDate) {
+    updateLinkExpirationDate(link) {
+        const {expirationDate, owner, shortenedUrl} = link.getSerialized();
         let byParams = {
             expirationDate: expirationDate
         };
@@ -53,16 +59,26 @@ export default class LinkRepositoryAdapter {
         password,
         expirationDate
     }) {
+        console.log("Entered createLinkEntityFromQueryResult");
         let link = new Link(originalUrl, shortenedUrl, owner);
         
         if (activated === 'false') {
             link.deactivate();
         }
-        if (numberOfClicks !== 0 || profit !== 0) {
-            link.updateStats(numberOfClicks, profit);
+        if (numberOfClicks !== 0) {
+            link.updateNumberOfClicks(numberOfClicks);
         }
-        if (ad || password || expirationDate) {
-            link.updateConfig(ad, password, expirationDate);
+        if (profit !== 0) {
+            link.updateProfit(profit);
+        }
+        if (ad) {
+            link.updateAd(ad);
+        }
+        if (password) {
+            link.updatePassword(password);
+        }
+        if (expirationDate) {
+            link.updateExpirationDate(expirationDate);
         }
 
         return link;
