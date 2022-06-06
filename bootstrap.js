@@ -13,6 +13,7 @@ import path from 'path';
 import WebNavigationAdapter from "./src/user-rest-interface/WebNavigationAdapter.js";
 import AdService from "./src/application/domain/Ad/AdService.js";
 import AdRepositoryAdapter from "./src/infrastructure/AdRepositoryAdapter.js";
+import {nanoid} from "nanoid";
 
 let mysqlDatabasePort = new MysqlDatabasePort(mysql, "localhost", "root", "admin", "pds", 3306);
 let jwtUtils = new JwtUtils(jwt, "my-secret-pass");
@@ -22,7 +23,7 @@ let accountRepositoryAdapter = new AccountRepositoryAdapter(mysqlDatabasePort);
 let accountService = new AccountService(accountRepositoryAdapter, stringCryptoUtils, jwtUtils);
 
 let linkRepositoryAdapter = new LinkRepositoryAdapter(mysqlDatabasePort);
-let linkService = new LinkService(linkRepositoryAdapter, stringCryptoUtils, urlShorteningUtils);
+let linkService = new LinkService(linkRepositoryAdapter, stringCryptoUtils, urlShorteningUtils, nanoid);
 
 let adRepositoryAdapter = new AdRepositoryAdapter(mysqlDatabasePort);
 let adService = new AdService(adRepositoryAdapter);

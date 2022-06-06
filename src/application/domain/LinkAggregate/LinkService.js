@@ -1,16 +1,17 @@
 import Link from "./Link.js";
 
 export default class LinkService {
-    constructor(linkRepositoryAdapter, stringCryptUtils, urlShorteningUtils) {
+    constructor(linkRepositoryAdapter, stringCryptUtils, urlShorteningUtils, urlIdGenerator) {
         this.linkRepositoryAdapter = linkRepositoryAdapter;
         this.stringCryptUtils = stringCryptUtils;
         this.urlShorteningUtils = urlShorteningUtils;
+        this.urlIdGenerator = urlIdGenerator;
     }
 
     createLink(owner, originalUrl) {
         this.#validateNewLinkFields(owner, originalUrl);
 
-        let shortenedUrl = this.urlShorteningUtils(originalUrl);
+        let shortenedUrl = this.urlShorteningUtils(owner, this.urlIdGenerator);
         let newLink = new Link(originalUrl, shortenedUrl, owner);
 
         try {
