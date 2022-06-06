@@ -20,7 +20,10 @@ export default class LinkRepositoryAdapter {
             return;
         }
         let link = this.#createLinkEntityFromQueryResult(queryResult[0]);
-        return link;
+        return {
+            linkId: queryResult[0]['id'],
+            link: link
+        };
     }
 
     updateLinkPassword(link) {

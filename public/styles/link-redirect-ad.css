@@ -1,0 +1,12 @@
+html{
+    background-color: #0d6efd;
+}
+
+section{
+    position: absolute;
+    left: 10%;
+    top: 0%;
+    width: 80%;
+    height: 100%;
+    background-color: white;
+}

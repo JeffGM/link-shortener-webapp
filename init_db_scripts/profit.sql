@@ -1,0 +1,11 @@
+CREATE TABLE `profit` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `linkId` int NOT NULL,
+  `profit` decimal(19, 4) DEFAULT NULL,
+  `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`linkId`)
+        REFERENCES `link`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
