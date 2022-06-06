@@ -11,14 +11,29 @@ $( document ).ready(function() {
         }
     });
 
-    var count = 30;
+    var count = 10;
 
     setInterval(function() {
         count--;
         $("#countdown").html(count);
 
         if (count === 0) {
-            count = 30;
+            proceed();
         }
     }, 1000);
 });
+
+function proceed() {
+    let body = {};
+    body["seenAd"] = true;
+
+    $.ajax({
+        type: "POST",
+        url: window.location.pathname,
+        data: JSON.stringify(body),
+        contentType: "application/json",
+        success: function(data){
+            redirectOrReplace(data);
+        }
+    });
+}

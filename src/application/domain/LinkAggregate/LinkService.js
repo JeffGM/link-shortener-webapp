@@ -1,6 +1,9 @@
 import Link from "./Link.js";
 
 export default class LinkService {
+    static PASSWORD_REQUIRED = 1;
+    static AD_REQUIRED = 2;
+
     constructor(linkRepositoryAdapter, stringCryptUtils, urlShorteningUtils, urlIdGenerator) {
         this.linkRepositoryAdapter = linkRepositoryAdapter;
         this.stringCryptUtils = stringCryptUtils;
@@ -25,9 +28,42 @@ export default class LinkService {
         return shortenedUrl;
     }
 
-    // followLink() {
+    followLink(owner, shortenedUrl, password, seenAd) {
+        let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
 
-    // }
+        if (!link) {
+            throw new Error("Couldn't find specified link for this user!");
+        }
+
+        if (this.#linkNeedsToSeeAd(link, seenAd) && !password) {
+            return LinkService.AD_REQUIRED;
+        }
+
+        if (this.#linkNeedsPassword(link, password)) {
+            return LinkService.PASSWORD_REQUIRED;
+        }
+
+        return link.getOriginalUrl();
+    }
+
+    #linkNeedsPassword(link, password) {
+        if (link.getConfig().getPassword()) {
+            if (!password) {
+                return true;
+            }
+            return !this.stringCryptUtils.compare(password, link.getConfig().getPassword());
+        }
+
+        return false;
+    }
+
+    #linkNeedsToSeeAd(link, seenAd) {
+        if (link.getConfig().getAd()) {
+            return !seenAd;
+        }
+
+        return false;
+    }
 
     advertizeLink(owner, shortenedUrl, ad) {
         this.#validateAdvertizeLinkParams(owner, shortenedUrl, ad);

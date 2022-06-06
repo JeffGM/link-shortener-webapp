@@ -41,23 +41,23 @@ export default class Link {
     }
 
     updateNumberOfClicks(numberOfClicks) {
-        this.config = new LinkStatistics({numberOfClicks});
+        this.config.numberOfClicks = numberOfClicks;
     }
 
     updateProfit(profit) {
-        this.config = new LinkStatistics({profit});
+        this.stats.profit = profit;
     }
 
     updateAd(ad) {
-        this.config = new LinkConfig({ad});
+        this.config.ad = ad;
     }
 
     updatePassword(password) {
-        this.config = new LinkConfig({password});
+        this.config.password = password;
     }
 
     updateExpirationDate(expirationDate) {
-        this.config = new LinkConfig({expirationDate});
+        this.config.expirationDate = expirationDate;
     }
 
     getSerialized() {

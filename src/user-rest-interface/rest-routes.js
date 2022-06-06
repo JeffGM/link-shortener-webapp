@@ -13,7 +13,9 @@ export default function(app, dependencyContainer) {
     app.post('/expiration', (req, res) => LinkAdapter.addLinkExpirationDate(req, res, dependencyContainer))
     app.get('/ad', (req, res) => AdAdapter.getAd(req, res, dependencyContainer))
     app.post('/ad', (req, res) => LinkAdapter.advertizeLink(req, res, dependencyContainer))
-
+    
+    app.post('/:owner/:code', (req, res) => LinkAdapter.followLink(req, res, dependencyContainer))
+    app.get('/:owner/:code', (req, res) => LinkAdapter.followLink(req, res, dependencyContainer))
 
     //web pages
     app.get('/login', (req, res) => WebNavigationAdapter.presentLoginPage(req, res, dependencyContainer))

@@ -6,7 +6,7 @@ CREATE TABLE `link` (
   `activated` varchar(5) NOT NULL,
   `numberOfClicks` int DEFAULT NULL,
   `profit` decimal(19, 4) DEFAULT NULL,
-  `ad` text DEFAULT NULL,
+  `ad` int DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
   `expirationDate` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)

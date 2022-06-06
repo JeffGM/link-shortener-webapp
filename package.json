@@ -6,10 +6,12 @@
   "type": "module",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "express": "^4.18.1",
     "express-unless": "^2.1.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
+    "nanoid": "^3.3.4",
     "sync-mysql": "^3.0.1"
   },
   "devDependencies": {},

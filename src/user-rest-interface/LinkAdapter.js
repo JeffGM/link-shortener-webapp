@@ -1,3 +1,5 @@
+import LinkService from "../application/domain/LinkAggregate/LinkService.js";
+
 export default class LinkAdapter {
     static createLink(req, res, dependencyContainer) {
         let owner = req.body.username;
@@ -53,5 +55,32 @@ export default class LinkAdapter {
         }
 
         return res.send(200, "Success!");
+    }
+
+    static followLink(req, res, dependencyContainer) {
+        let owner = req.params.owner;
+        let url = req.originalUrl.slice(1);
+        let password = req.body.password;
+        let seenAd = req.body.seenAd;
+
+        let path = dependencyContainer["path"];
+
+        try {
+            let action = dependencyContainer["linkService"].followLink(owner, url, password, seenAd);
+
+            if (action == LinkService.AD_REQUIRED) {
+                return res.sendFile(path.join(path.resolve() + '/src/views/link-redirect-ad.html'))
+            } else if (action == LinkService.PASSWORD_REQUIRED) {
+                return res.sendFile(path.join(path.resolve() + '/src/views/link-redirect-password.html'))
+            } else {
+                if (!password && !seenAd) {
+                    res.status(301).redirect(action)
+                } else {
+                    return res.json({url: action})
+                }
+            }
+        } catch(err) {
+            return res.status(422).send("Link not found!");
+        }
     }
 }
