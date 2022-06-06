@@ -1,3 +1,4 @@
-export default function (url) {
-    return "Your shortened url"; //TODO: implement
+export default function (base, generateId) {
+    const urlId = generateId();
+    return `${base}/${urlId}`;
 }
