@@ -57,6 +57,31 @@ export default class LinkAdapter {
         return res.send(200, "Success!");
     }
 
+    static logLinkVisit(req, res, dependencyContainer) {
+        try {
+            let url = req.body.url.slice(1);
+            let owner = url.split('/')[0];
+
+            dependencyContainer["linkService"].logLinkAccess(owner, url);
+        } catch(err) {
+            return res.status(422).send("Link not found!");
+        }
+        return res.send(200, "Success!");
+    }
+
+    static logLinkProfit(req, res, dependencyContainer) {
+        try {
+            let url = req.body.url.slice(1);
+            let owner = url.split('/')[0];
+            let adId = req.body.adId;
+
+            dependencyContainer["linkService"].logLinkProfit(owner, url, adId);
+        } catch(err) {
+            return res.status(422).send("Link or ad not found!");
+        }
+        return res.send(200, "Success!");
+    }
+
     static followLink(req, res, dependencyContainer) {
         let owner = req.params.owner;
         let url = req.originalUrl.slice(1);

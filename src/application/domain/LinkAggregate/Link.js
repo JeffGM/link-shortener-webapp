@@ -3,13 +3,18 @@ import LinkStatistics from "./LinkStatistic.js"
 
 // Aggregate's root
 export default class Link {
-    constructor(originalUrl, shortenedUrl, owner) {
+    constructor(id, originalUrl, shortenedUrl, owner) {
+        this.id = id;
         this.originalUrl = originalUrl;
         this.shortenedUrl = shortenedUrl;
         this.owner = owner;
         this.activated = true;
         this.stats = new LinkStatistics({});
         this.config = new LinkConfig({});
+    }
+
+    getId() {
+        return this.id;
     }
 
     getOriginalUrl() {

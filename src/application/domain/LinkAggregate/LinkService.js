@@ -4,18 +4,19 @@ export default class LinkService {
     static PASSWORD_REQUIRED = 1;
     static AD_REQUIRED = 2;
 
-    constructor(linkRepositoryAdapter, stringCryptUtils, urlShorteningUtils, urlIdGenerator) {
+    constructor(adService, linkRepositoryAdapter, stringCryptUtils, urlShorteningUtils, urlIdGenerator) {
         this.linkRepositoryAdapter = linkRepositoryAdapter;
         this.stringCryptUtils = stringCryptUtils;
         this.urlShorteningUtils = urlShorteningUtils;
         this.urlIdGenerator = urlIdGenerator;
+        this.adService = adService;
     }
 
     createLink(owner, originalUrl) {
         this.#validateNewLinkFields(owner, originalUrl);
 
         let shortenedUrl = this.urlShorteningUtils(owner, this.urlIdGenerator);
-        let newLink = new Link(originalUrl, shortenedUrl, owner);
+        let newLink = new Link(null, originalUrl, shortenedUrl, owner);
 
         try {
             this.linkRepositoryAdapter.saveLink(newLink);
@@ -101,6 +102,17 @@ export default class LinkService {
 
         link.updateExpirationDate(expirationDate);
         this.linkRepositoryAdapter.updateLinkExpirationDate(link);
+    }
+
+    logLinkAccess(owner, shortenedUrl) {
+        let {link} = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        this.linkRepositoryAdapter.addAccessStatistic(link);
+    }
+
+    logLinkProfit(owner, shortenedUrl, adId) {
+        let {link} = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        let profit = this.adService.getAdCost(adId);
+        this.linkRepositoryAdapter.addProfitStatistic(link, profit);
     }
 
     // checkLinkStats() {

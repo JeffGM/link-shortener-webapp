@@ -62,7 +62,25 @@ export default class LinkRepositoryAdapter {
         this.databasePort.updateOne('link', byParams, where);
     }
 
+    addAccessStatistic(link) {
+        let withParams = {
+            linkId: link.getId()
+        };
+        
+        this.databasePort.insertOne('access', withParams)
+    }
+
+    addProfitStatistic(link, profit) {
+        let withParams = {
+            linkId: link.getId(),
+            profit: profit
+        };
+
+        this.databasePort.insertOne('profit', withParams)
+    }
+
     #createLinkEntityFromQueryResult({
+        id,
         originalUrl,
         shortenedUrl,
         owner,
@@ -73,7 +91,7 @@ export default class LinkRepositoryAdapter {
         password,
         expirationDate
     }) {
-        let link = new Link(originalUrl, shortenedUrl, owner);
+        let link = new Link(id, originalUrl, shortenedUrl, owner);
         
         if (activated === 'false') {
             link.deactivate();

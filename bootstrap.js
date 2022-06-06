@@ -22,11 +22,12 @@ let stringCryptoUtils = new StringCryptoUtils(bcrypt);
 let accountRepositoryAdapter = new AccountRepositoryAdapter(mysqlDatabasePort);
 let accountService = new AccountService(accountRepositoryAdapter, stringCryptoUtils, jwtUtils);
 
-let linkRepositoryAdapter = new LinkRepositoryAdapter(mysqlDatabasePort);
-let linkService = new LinkService(linkRepositoryAdapter, stringCryptoUtils, urlShorteningUtils, nanoid);
-
 let adRepositoryAdapter = new AdRepositoryAdapter(mysqlDatabasePort);
 let adService = new AdService(adRepositoryAdapter);
+
+let linkRepositoryAdapter = new LinkRepositoryAdapter(mysqlDatabasePort);
+let linkService = new LinkService(adService, linkRepositoryAdapter, stringCryptoUtils, urlShorteningUtils, nanoid);
+
 
 let webNavigationAdapter = new WebNavigationAdapter(path);
 

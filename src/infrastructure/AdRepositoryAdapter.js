@@ -11,4 +11,10 @@ export default class AdRepositoryAdapter {
 
         return new Ad(randomAd["id"], randomAd["base64Image"], randomAd["costPerView"]);
     }
+
+    getAd(adId) {
+        let ad = this.databasePort.selectOne('ad', {id: adId});
+        ad = ad[0];
+        return new Ad(ad["id"], ad["base64Image"], ad["costPerView"]);
+    }
 }

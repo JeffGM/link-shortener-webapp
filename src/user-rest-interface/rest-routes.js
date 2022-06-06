@@ -17,6 +17,9 @@ export default function(app, dependencyContainer) {
     app.post('/:owner/:code', (req, res) => LinkAdapter.followLink(req, res, dependencyContainer))
     app.get('/:owner/:code', (req, res) => LinkAdapter.followLink(req, res, dependencyContainer))
 
+    app.post('/log-access', (req, res) => LinkAdapter.logLinkVisit(req, res, dependencyContainer))
+    app.post('/log-profit', (req, res) => LinkAdapter.logLinkProfit(req, res, dependencyContainer))
+
     //web pages
     app.get('/login', (req, res) => WebNavigationAdapter.presentLoginPage(req, res, dependencyContainer))
     app.get('/register', (req, res) => WebNavigationAdapter.presentRegisterPage(req, res, dependencyContainer))
@@ -24,7 +27,4 @@ export default function(app, dependencyContainer) {
     app.get('/dashboard',
         (req, res, next) => AuthMiddleware.authenticate(req, res, next, dependencyContainer), 
         (req, res) => WebNavigationAdapter.presentDashboard(req, res, dependencyContainer))
-
-    //test routes
-    app.get('/display-ad', (req, res) => WebNavigationAdapter.presentAdPage(req, res, dependencyContainer))
 }
