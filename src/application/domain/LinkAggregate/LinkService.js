@@ -36,13 +36,15 @@ export default class LinkService {
         this.#validateAddLinkPasswordParams(owner, shortenedUrl, password);
 
         let link = this.linkRepositoryAdapter.getLinkByUsernameAndShortenedUrl(owner, shortenedUrl);
+        console.log("Returned from getLinkByUsernameAndShortenedUrl");
 
         if (!link) {
             throw new Error("Couldn't find specified link for this user!");
         }
         
         let encryptedPassword = this.stringCryptUtils.encrypt(password);
-        this.linkRepositoryAdapter.updateLinkPassword(owner, shortenedUrl, encryptedPassword);
+        link.updatePassword(encryptedPassword);
+        this.linkRepositoryAdapter.updateLinkPassword(link);
     }
 
     addLinkExpirationDate(owner, shortenedUrl, expirationDate) {
@@ -54,7 +56,8 @@ export default class LinkService {
             throw new Error("Couldn't find specified link for this user!");
         }
 
-        this.linkRepositoryAdapter.updateLinkExpirationDate(owner, shortenedUrl, expirationDate);
+        link.updateExpirationDate(expirationDate);
+        this.linkRepositoryAdapter.updateLinkExpirationDate(link);
     }
 
     // checkLinkStats() {
