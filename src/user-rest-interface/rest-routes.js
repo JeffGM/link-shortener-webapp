@@ -23,4 +23,6 @@ export default function(app, dependencyContainer) {
         (req, res, next) => AuthMiddleware.authenticate(req, res, next, dependencyContainer), 
         (req, res) => WebNavigationAdapter.presentDashboard(req, res, dependencyContainer))
 
+    //test routes
+    app.get('/display-ad', (req, res) => WebNavigationAdapter.presentAdPage(req, res, dependencyContainer))
 }
