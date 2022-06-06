@@ -82,6 +82,17 @@ export default class LinkAdapter {
         return res.send(200, "Success!");
     }
 
+    static getStatistics(req, res, dependencyContainer) {
+        let owner = req.owner;
+
+        try {
+            let result = dependencyContainer["linkService"].getStatistics(owner);
+            return res.json(result);
+        } catch(err) {
+            return res.status(500).send("Error!");
+        }
+    }
+
     static followLink(req, res, dependencyContainer) {
         let owner = req.params.owner;
         let url = req.originalUrl.slice(1);

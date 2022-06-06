@@ -17,6 +17,7 @@ export default class AuthMiddleware {
         let tokenContents = dependencyContainer["jwtUtils"].getAccountFromToken(token);
 
         if (tokenContents) {
+            req.owner = tokenContents["account"];
             return next();
         }
         

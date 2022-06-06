@@ -47,6 +47,23 @@ export default class LinkService {
         return link.getOriginalUrl();
     }
 
+    getStatistics(owner) {
+        let allLinks = this.linkRepositoryAdapter.getAllLinksFromOwner(owner);
+
+        let statistics = {
+            access: [],
+            profit: []
+        };
+
+        for(let i = 0; i < allLinks.length; i++) {
+            let currentLink = allLinks[i];
+            statistics.access.push(this.linkRepositoryAdapter.getAccessesFromLink(currentLink.getId()));
+            statistics.profit.push(this.linkRepositoryAdapter.getProfitFromLink(currentLink.getId()));
+        }
+
+        return statistics;
+    }
+
     #linkNeedsPassword(link, password) {
         if (link.getConfig().getPassword()) {
             if (!password) {

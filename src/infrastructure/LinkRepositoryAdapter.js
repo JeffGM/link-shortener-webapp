@@ -79,6 +79,29 @@ export default class LinkRepositoryAdapter {
         this.databasePort.insertOne('profit', withParams)
     }
 
+    getAllLinksFromOwner(ownerName) {
+        let results =  this.databasePort.select('link', {owner: ownerName}, 1000);
+        let parsedResults = [];
+
+        for(let i = 0; i < results.length; i++) {
+            parsedResults.push(this.#createLinkEntityFromQueryResult(results[i]));
+        }
+
+        return parsedResults;
+    }
+
+    getAccessesFromLink(linkId) {
+        let results = this.databasePort.select('access', {linkId: linkId}, 1000)
+
+        return results;
+    }
+
+    getProfitFromLink(linkId) {
+        let results = this.databasePort.select('profit', {linkId: linkId}, 1000)
+
+        return results;
+    }
+
     #createLinkEntityFromQueryResult({
         id,
         originalUrl,
