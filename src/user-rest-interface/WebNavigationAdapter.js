@@ -16,7 +16,7 @@ export default class WebNavigationAdapter {
 
     static presentDashboard(req, res, dependencyContainer) {
         let path = dependencyContainer["path"];
-        res.sendFile(path.join(path.resolve() + '/src/views/cadastro.html'))
+        res.sendFile(path.join(path.resolve() + '/src/views/dashboard-acessos.html'))
     }
 
     static presentAdPage(req, res, dependencyContainer) {

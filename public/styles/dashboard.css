@@ -1,0 +1,28 @@
+.top-header{
+    display: flex;
+}
+
+.header-left {
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+}
+
+.header-right {
+    /* margin-right: auto; */
+    width: 100%;
+    text-align-last: right;
+}
+
+.header-left .chip {
+    align-self: center;
+    margin-left: 10px;
+    background-color: orange;
+    padding: 3px;
+    border-radius: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    font-style: italic;
+}

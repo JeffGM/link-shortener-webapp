@@ -7,9 +7,12 @@
     <title>Encurtar Link</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
     <!-- CUSTOM CSS-->
-    <link rel="stylesheet" href="../../public/styles/styles.css">
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/dashboard.css">
 
 </head>
 
@@ -19,7 +22,7 @@
     <!-- INICIO: sidebar menu -->
         <nav id="sidebar" class="col-md-2">
             <div class="sidebar-header">
-                <img src="../../public/images/main-logo.png" alt="Logo do Site" class="img-fluid"/>
+                <img src="/images/main-logo.png" alt="Logo do Site" class="img-fluid"/>
             </div>
 
             <hr />
@@ -47,22 +50,36 @@
 
     <!-- INICIO: page content -->
         <div id="content">
+            <div class="top-header">
+                <div class="header-left">
+                    <h1>Acessos Totais</h1>
+                    <div class="chip">2703 Acessos</div>
+                </div>
+                <div class="header-right">
+                    <div class="stats-type-button" role="group" aria-label="Basic example">
+                        <button id="access-button" type="button" class="btn btn-secondary">Acessos</button>
+                        <button id="profit-button" type="button" class="btn btn-secondary">Lucros</button>
+                      </div>
+                </div>
+            </div>
+
+            <div class="graph-container">
+
+            </div>
+            <div class="history-container"> 
+
+            </div>
             
+
         </div>
     <!-- FINAL: page content -->
     </div>
-
-
-
-
-
-
 
     <!-- SCRIPTS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- CUSTOM SCRIPTS -->
-    <script src="../../public/scripts/scripts.js"></script>
+    <script src="/scripts/scripts.js"></script>
 
 
 </body>
